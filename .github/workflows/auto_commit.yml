@@ -15,12 +15,12 @@ jobs:
 
     - name: Set up Git
       run: |
-        git config user.name "${{ secrets.GITHUB_USERNAME }}"
-        git config user.email "${{ secrets.GITHUB_EMAIL }}"
-        git config --global user.name "${{ secrets.GITHUB_USERNAME }}"
-        git config --global user.email "${{ secrets.GITHUB_EMAIL }}"
+        git config user.name "${{ secrets.USERNAME }}"
+        git config user.email "${{ secrets.EMAIL }}"
+        git config --global user.name "${{ secrets.USERNAME }}"
+        git config --global user.email "${{ secrets.EMAIL }}"
         git config --global credential.helper store
-        echo -n "machine github.com login $token-email" >> ~/.netrc
+        echo -n "machine github.com login $tokenemail" >> ~/.netrc
         chmod 600 ~/.netrc
 
     - name: Create and Push Commit
