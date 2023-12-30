@@ -3,6 +3,9 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from supabase import create_client, Client
 from google.oauth2.service_account import Credentials
+import data_email_raw
+import data_warehouse_raw
+import email_tracking_main
 
 # Supabase Connection Details
 SUPABASE_URL = "https://sxoqzllwkjfluhskqlfl.supabase.co"
@@ -234,7 +237,7 @@ for row in data:
 
     if row_index:
         # Update tracking numbers and quantities in batch
-        for j in range(10):  # Adjust range based on your data
+        for j in range(4):  # Adjust range based on your data
             tracking_number = row[j + 6]
             if tracking_number:
                 cell_address = gspread.utils.rowcol_to_a1(
@@ -244,7 +247,7 @@ for row in data:
                     {"range": f"{cell_address}", "values": [[tracking_number]]}
                 )
 
-        for j in range(5):  # Adjust range based on your data
+        for j in range(4):  # Adjust range based on your data
             quantity = row[j + 11]
             if quantity is not None:
                 cell_address = gspread.utils.rowcol_to_a1(
@@ -253,6 +256,13 @@ for row in data:
                 batch_updates.append(
                     {"range": f"{cell_address}", "values": [[quantity]]}
                 )
+
+        delivery_status = row[5]
+        if delivery_status is not None:
+            cell_address = gspread.utils.rowcol_to_a1(
+                row_index, status_update_column_index
+            )
+            batch_updates.append({"range": f"{cell_address}", "values": [[delivery_status]]})
 
         # Update price
         price = row[4]

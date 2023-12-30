@@ -48,9 +48,9 @@ def load_data_from_supabase(table_name):
     if table_name == "email_tracking_raw":
         # Fill NA/NaN values with an empty string before filtering
         df["delivery_status"] = df["delivery_status"].fillna("")
-        df = df[
-            df["delivery_status"].str.lower().str.startswith(("shipped", "delivered"))
-        ]
+        # df = df[
+        #     df["delivery_status"].str.lower().str.startswith(("shipped", "delivered"))
+        # ]
         df = convert_floats_to_ints(df)
 
     return df
