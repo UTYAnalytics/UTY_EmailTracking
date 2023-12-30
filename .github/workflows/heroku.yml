@@ -1,0 +1,19 @@
+name: Deploy to Heroku
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Run every day at 2 AM
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to Heroku
+      run: |
+        heroku container:login
+        heroku container:push -a emailtrackingschedule web
+        heroku container:release -a emailtrackingschedule web
